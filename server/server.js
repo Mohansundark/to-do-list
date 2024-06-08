@@ -3,11 +3,13 @@ const userRoutes = require("./routes/userRoutes")
 const todoRoutes = require("./routes/todoRoutes")
 const mongoose = require("mongoose")
 const requireAuth = require("./middleware/requireAuth")
+const cors = require('cors')
 const app = express();
 const cookiPaser = require("cookie-parser")
 
 app.use(express.json())
 app.use(cookiPaser())
+app.use(cors())
 app.use((req, res, next) => {
     console.log(req.path, req.method);
     next();
@@ -28,7 +30,7 @@ app.get('/get', (req, res) => {
 })
 
 mongoose.connect(process.env.MONGODB_URL)
-const port = process.env.PORT
+const port = process.env.PORT;
 app.listen(port, () => {
     console.log(`listening on port ${port}`);
 });
